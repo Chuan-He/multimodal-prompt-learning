@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#cd ../..
+cd ../..
 
 # custom config
-DATA="/path/to/dataset/folder"
+DATA="DATA"
 TRAINER=MaPLe
 
 DATASET=$1
 SEED=$2
 
-CFG=vit_b16_c2_ep5_batch4_2ctx
+CFG=test_b8
 SHOTS=16
 LOADEP=5
 SUB=new
@@ -22,7 +22,7 @@ if [ -d "$DIR" ]; then
     echo "Evaluating model"
     echo "Results are available in ${DIR}. Resuming..."
 
-    python train.py \
+    python trainer.py \
     --root ${DATA} \
     --seed ${SEED} \
     --trainer ${TRAINER} \
@@ -39,7 +39,7 @@ else
     echo "Evaluating model"
     echo "Runing the first phase job and save the output to ${DIR}"
 
-    python train.py \
+    python trainer.py \
     --root ${DATA} \
     --seed ${SEED} \
     --trainer ${TRAINER} \

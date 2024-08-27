@@ -1,22 +1,23 @@
 #!/bin/bash
 
-#cd ../..
+cd ../..
 
 # custom config
-DATA="/path/to/dataset/folder"
+DATA="DATA"
 TRAINER=CoCoOp
 
 DATASET=$1
-SEED=$2
+#SEED=$2
 
-CFG=vit_b16_c4_ep10_batch1_ctxv1
+CFG=test_8b
 SHOTS=16
 
-
+for SEED in 1 2 3
+do
 DIR=output/base2new/train_base/${DATASET}/shots_${SHOTS}/${TRAINER}/${CFG}/seed${SEED}
 if [ -d "$DIR" ]; then
     echo "Results are available in ${DIR}. Resuming..."
-    python train.py \
+    python trainer.py \
     --root ${DATA} \
     --seed ${SEED} \
     --trainer ${TRAINER} \
@@ -27,7 +28,7 @@ if [ -d "$DIR" ]; then
     DATASET.SUBSAMPLE_CLASSES base
 else
     echo "Run this job and save the output to ${DIR}"
-    python train.py \
+    python trainer.py \
     --root ${DATA} \
     --seed ${SEED} \
     --trainer ${TRAINER} \
@@ -37,3 +38,4 @@ else
     DATASET.NUM_SHOTS ${SHOTS} \
     DATASET.SUBSAMPLE_CLASSES base
 fi
+done

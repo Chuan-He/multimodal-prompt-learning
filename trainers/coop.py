@@ -75,7 +75,7 @@ class PromptLearner(nn.Module):
         if ctx_init:
             # use given words to initialize context vectors
             ctx_init = ctx_init.replace("_", " ")
-            n_ctx = len(ctx_init.split(" "))
+            n_ctx = cfg.TRAINER.COOP.N_CTX #len(ctx_init.split(" "))
             prompt = clip.tokenize(ctx_init)
             with torch.no_grad():
                 embedding = clip_model.token_embedding(prompt).type(dtype)

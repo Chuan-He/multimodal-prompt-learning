@@ -1,17 +1,17 @@
 #!/bin/bash
 
-#cd ../..
+cd ../..
 
 # custom config
-DATA=/path/to/datasets
+DATA='DATA'
 TRAINER=CoOp
 
 DATASET=$1
-CFG=$2  # config file
-CTP=$3  # class token position (end or middle)
-NCTX=$4  # number of context tokens
-SHOTS=$5  # number of shots (1, 2, 4, 8, 16)
-CSC=$6  # class-specific context (False or True)
+CFG=cross  # config file
+CTP=end  # class token position (end or middle)
+NCTX=2  # number of context tokens
+SHOTS=16  # number of shots (1, 2, 4, 8, 16)
+CSC=False  # class-specific context (False or True)
 
 for SEED in 1 2 3
 do
@@ -20,7 +20,7 @@ do
         echo "Results are available in ${DIR}. Skip this job"
     else
         echo "Run this job and save the output to ${DIR}"
-        python train.py \
+        python trainer.py \
         --root ${DATA} \
         --seed ${SEED} \
         --trainer ${TRAINER} \

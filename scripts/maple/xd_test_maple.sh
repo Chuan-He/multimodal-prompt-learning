@@ -1,25 +1,28 @@
 #!/bin/bash
 
-#cd ../..
+cd ../..
 
 # custom config
-DATA="/path/to/dataset/folder"
+DATA="DATA"
 TRAINER=MaPLe
 
 DATASET=$1
 SEED=$2
 
-CFG=vit_b16_c2_ep5_batch4_2ctx_cross_datasets
+CFG=cross
 SHOTS=16
 
-
+for DATASET in imagenetv2 imagenet_sketch imagenet_a imagenet_r
+do 
+for SEED in 1 2 3
+do
 DIR=output/evaluation/${TRAINER}/${CFG}_${SHOTS}shots/${DATASET}/seed${SEED}
 if [ -d "$DIR" ]; then
     echo "Results are available in ${DIR}. Skip this job"
 else
     echo "Run this job and save the output to ${DIR}"
 
-    python train.py \
+    python trainer.py \
     --root ${DATA} \
     --seed ${SEED} \
     --trainer ${TRAINER} \
@@ -30,3 +33,5 @@ else
     --load-epoch 2 \
     --eval-only
 fi
+done
+done
